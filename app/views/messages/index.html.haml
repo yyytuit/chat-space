@@ -1,79 +1,25 @@
-!!!
-%html
-  %head
-    %title ChatSpace
-    %meta{charset: "utf-8"}
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-    %body
-      .header
-        アカウント登録完了
-      .chat-layout
-        .chat-side
-          .chat-user
-            .chat-user__name hiro
-            .chat-icons
-              .chat-icons__icon
-                .chat-icons__icon--edit
-                = link_to "/groups/new", method: :get do
-                  %i.fas.fa-edit
-                .chat-icons__icon--cog
-                = link_to "/users/user_id/edit", method: :get do
-                  %i.fa.fa-cog
-          .chat-groups
-            .chat-group
-              .chat-group__title
-                chats-title
-              .chat-group__messages
-                test-message
-            .chat-group
-              .chat-group__title
-                chats-title-second
-              .chat-group__messages
-                まだメッセージがありません
-        .chat-main
-          .chat-header
-            .chat-header--left
-              .chat-header--left__title chats-title
-              .chat-header--left__users
-                Members
-                %span.chat-header__user
-                  hiro
-                %span.chat-header__user
-                  hoka
-            .chat-header--right
-              .edit-btn
-              = link_to 'Edit', "/groups/group_id/edit", method: :get
-          .chat-body
-            .chat-messages
-              .chat-massage_header
-                .chat-message__name hiro
-                .chat-message__time 2018/10/05 06:24:07
-              .chat-massage__body test-message
-              .chat-massage_header
-                .chat-message__name hiro
-                .chat-message__time 2018/10/05 06:24:07
-              .chat-massage__body test-message
-              .chat-massage_header
-                .chat-message__name hiro
-                .chat-message__time 2018/10/05 06:24:07
-              .chat-massage__body test-message
-              .chat-massage_header
-                .chat-message__name hiro
-                .chat-message__time 2018/10/05 06:24:07
-              .chat-massage__body test-message
-              .chat-massage_header
-                .chat-message__name hiro
-                .chat-message__time 2018/10/05 06:24:07
-              .chat-massage__body test-message
-              .chat-massage_header
-                .chat-message__name hiro
-                .chat-message__time 2018/10/05 06:24:07
-              .chat-massage__body test-message
-          .chat-footer
-            %form
-              %input.chat-footer__text-field{:type => "text",:placeholder => "type a message"}
-              .footer-icon
-                %label
-                  %input{:type => "file", :name => "message[image]", :id => "message_image", :accept =>"image/png, image/jpeg",:style=> "display:none;"}
-                    %i.far.fa-image
-              %button.posts__submit{:type =>"submit"}Send
+= render 'shared/side_bar'
+.chat-main
+  .chat-header
+    .chat-header--left
+      .chat-header--left__title chats-title
+      .chat-header--left__users
+        Members
+        %span.chat-header__user
+          hiro
+        %span.chat-header__user
+          hoka
+    .chat-header--right
+      .edit-btn
+      = link_to 'Edit', "/groups/group_id/edit", method: :get
+  .chat-messages
+    = render @messages
+  .chat-footer
+    .form
+      = form_for [@group, @message] do |f|
+        = f.text_field :content, class: 'form__message', placeholder: 'type a message'
+        .form__mask
+          = f.label :image, class: 'form__mask__image' do
+            = fa_icon 'picture-o', class: 'icon'
+            = f.file_field :image, class: 'hidden'
+        = f.submit 'Send', class: 'form__submit'

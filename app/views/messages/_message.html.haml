@@ -1,0 +1,11 @@
+.chat-message
+  .chat-massage_header
+    .chat-message__name
+      = message.user.name
+    .chat-message__time
+      = format_posted_time(message.created_at)
+  .chat-massage__body
+    - if message.content.present?
+      %p.lower-message__content
+        = message.content
+  = image_tag message.image.url, class: 'lower-message__image' if message.image.present?
